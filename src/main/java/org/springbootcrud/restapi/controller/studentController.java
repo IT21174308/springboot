@@ -2,8 +2,8 @@ package org.springbootcrud.restapi.controller;
 
 import org.springbootcrud.restapi.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import org.springbootcrud.restapi.entity.student;
 
@@ -21,4 +21,20 @@ public class studentController {
         List<student> students = repo.findAll();
         return students;
     }
+
+    //Get students by id
+    //localhost:8080/students/1
+    @GetMapping("/students/{id}")
+    public student getStudent(@PathVariable int id) {
+        student students = repo.findById(id).get();
+        return students;
+    }
+
+    //add students
+    //localhost:8080/student/add
+    @PostMapping("/student/add")
+    public void createStudent(@RequestBody student student) {
+        repo.save(student);
+    }
+
 }
