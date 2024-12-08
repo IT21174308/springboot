@@ -2,6 +2,7 @@ package org.springbootcrud.restapi.controller;
 
 import org.springbootcrud.restapi.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,9 +33,22 @@ public class studentController {
 
     //add students
     //localhost:8080/student/add
+    @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping("/student/add")
     public void createStudent(@RequestBody student student) {
         repo.save(student);
     }
+
+    //update student record
+    //localhost:8080/student/update/1
+    @PutMapping("/student/update/{id}")
+    public student updateStudent(@PathVariable int id){
+        student students = repo.findById(id).get();
+        students.setBranch("test");
+        students.setName("testname");
+        repo.save(students);
+        return students;
+    }
+
 
 }
